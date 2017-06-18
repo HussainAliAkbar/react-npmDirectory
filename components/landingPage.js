@@ -16,17 +16,18 @@ class LandingPage extends React.Component {
             searchQuery: '',
             packages: [],
             from: 0,
-            size: 10
+            size: 5
         };
         this.getDataFromSearch = this.getDataFromSearch.bind(this);
         this.renderFooterDivider = this.renderFooterDivider.bind(this);
         this.loadMorePackages = this.loadMorePackages.bind(this);
     }
     getDataFromSearch(query) {
-        this.setState({searchQuery: query});
-        return getFromServer(query)
+        this.setState({searchQuery: query, from: 0});
+        return getFromServer(query, this.state.from, this.state.size)
             .then((response) => {
-            this.setState({packages: response.data.results});
+            let newFrom = this.state.from + this.state.size;
+            this.setState({packages: response.data.results, from: newFrom});
             })
             .catch((err) => {
             console.log('err in landing: ', err);
@@ -49,6 +50,17 @@ class LandingPage extends React.Component {
     }
 
     loadMorePackages() {
+        return getFromServer(this.state.searchQuery, this.state.from, this.state.size)
+            .then((response) => {
+                let newPackages = response.data.results;
+                let oldPackages = this.state.packages;
+                let combinedPackages = oldPackages.concat(newPackages);
+                let newFrom = this.state.from + this.state.size;
+                this.setState({packages: combinedPackages, from: newFrom});
+            })
+            .catch((err) => {
+                console.log('err in landing: ', err);
+            })
     }
 
 
