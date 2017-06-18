@@ -9,7 +9,7 @@ class Header extends React.Component {
     render() {
         return (
             <div className="headerImage">
-                <a href="www.github.com/hussainaliakbar"><i className="fa fa-github fa-5x hvr-grow"></i></a>
+                <a href="https://github.com/HussainAliAkbar/react-npmDirectory"><i className="fa fa-github fa-5x hvr-grow"></i></a>
                 <div>
                     <h1 className="headerText">NPM Repository Lookup</h1>
                 </div>

@@ -31,6 +31,9 @@ handleClick() {
 }
 
     handleKeyPress(e) {
+
+
+        
         if (e.key === 'Enter' && this.state.previousValue !== this.state.inputField) {
             this.setState({previousValue: this.state.inputField});
             this.props.sendData(this.state.inputField);

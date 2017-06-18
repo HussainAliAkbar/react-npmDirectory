@@ -8,6 +8,7 @@ import PackageList from './packageList';
 import Divider from './divider';
 import Header from './header';
 import Footer from './footer';
+import PackageSizeSelector from './packageSizeSelector';
 
 class LandingPage extends React.Component {
     constructor() {
@@ -21,6 +22,7 @@ class LandingPage extends React.Component {
         this.getDataFromSearch = this.getDataFromSearch.bind(this);
         this.renderFooterDivider = this.renderFooterDivider.bind(this);
         this.loadMorePackages = this.loadMorePackages.bind(this);
+        this.setSize = this.setSize.bind(this);
     }
     getDataFromSearch(query) {
         this.setState({searchQuery: query, from: 0});
@@ -35,9 +37,7 @@ class LandingPage extends React.Component {
     }
 
     renderFooterDivider() {
-        debugger;
         if (this.state.packages.length) {
-            console.log('inside if');
             return (
                 <Divider/>
             )
@@ -63,6 +63,24 @@ class LandingPage extends React.Component {
             })
     }
 
+    setSize(size) {
+        size = +size;
+        this.setState({size: size, from: 0, packages: []});
+        if (this.state.searchQuery !== '') {
+            return getFromServer(this.state.searchQuery, 0, size)
+                .then((response) => {
+                    let newPackages = response.data.results;
+                    let oldPackages = this.state.packages;
+                    let combinedPackages = oldPackages.concat(newPackages);
+                    let newFrom = this.state.from + this.state.size;
+                    this.setState({packages: combinedPackages, from: newFrom});
+                })
+                .catch((err) => {
+                    console.log('err in landing: ', err);
+                })
+        }
+    }
+
 
     render() {
         return (
@@ -70,6 +88,12 @@ class LandingPage extends React.Component {
                     <Header/>
                 <Row>
                     <Search sendData={this.getDataFromSearch}/>
+                </Row>
+                <Row>
+                    <Divider/>
+                </Row>
+                <Row>
+                    <PackageSizeSelector setSize={this.setSize}/>
                 </Row>
                 <Row>
                     <Divider/>
