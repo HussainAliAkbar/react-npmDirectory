@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
-import {Container, Row, Column} from 'react-grid-system';
 
 
 class anotherPage extends React.Component {

@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {Container, Row, Column} from 'react-grid-system';
-import {Link} from 'react-router-dom';
 import Search from './search';
 import getFromServer from '../helpers/apiHelper';
 import PackageList from './packageList';

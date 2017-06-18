@@ -1,9 +1,9 @@
 import axios from 'axios';
-const url = 'https://api.npms.io/v2/search';
+const baseUrl = 'https://api.npms.io/v2/search';
 
 
 function getFromServer(query, from, size) {
-    let url = `https://api.npms.io/v2/search?q=${query}&from=${from}&size=${size}`;
+    let url = `${baseUrl}?q=${query}&from=${from}&size=${size}`;
     return axios.get(url)
         .then((res) => {
         return res;
